@@ -1,0 +1,35 @@
+version: "3"
+services:
+  go:
+    container_name: go
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    platform: linux/x86_64
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - 3000:3000
+    links:
+      - mysql
+    tty:
+      true
+    volumes:
+      - ./backend/src:/go/src
+  mysql:
+    container_name: mysql
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    platform: linux/x86_64
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: backend
+    ports:
+      - "3306:3306"
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/sql:/docker-entrypoint-initdb.d
