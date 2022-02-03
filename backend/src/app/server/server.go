@@ -11,10 +11,17 @@ import (
 func StartServer() error {
     fmt.Println("Rest API with Mux Routers")
     router := gin.Default()
-
-	userController := controllers.UserController{}
-	router.GET("/users", userController.GetAllUser)
-    router.GET("/users/:id", userController.GetUser)
-	router.POST("/users", userController.CreateUser)
+    defineRoutes(router)
     return http.ListenAndServe(fmt.Sprintf(":%d", config.Config.ServerPort), router)
+}
+
+func defineRoutes(r gin.IRouter) {
+    v1 := r.Group("/v1")
+    // ユーザー
+    {
+        userController := controllers.UserController{}
+        v1.GET("/users", userController.GetAllUser)
+        v1.GET("/users/:id", userController.GetUser)
+        v1.POST("/users", userController.CreateUser)
+    }
 }

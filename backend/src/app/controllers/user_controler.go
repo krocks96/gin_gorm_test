@@ -3,6 +3,7 @@ package controllers
 import (
     "net/http"
 	"log"
+	"strconv"
     "github.com/gin-gonic/gin"
 	"app/models"
 	"app/models/entity"
@@ -11,18 +12,38 @@ import (
 type UserController struct {}
 
 func (pc UserController) GetAllUser(c *gin.Context){
-    c.JSONP(http.StatusOK, gin.H{
-        "message": "ok",
-        "data": "AllUsers",
-    })
+	// ユーザー取得
+	users, err := model.FindAllUser()
+	if err != nil {
+		c.AbortWithStatus(400)
+		log.Println(err)
+	} else {
+		c.JSONP(http.StatusOK, gin.H{
+			"message": "ok",
+			"data": users,
+		})
+	}
 }
 
 func (pc UserController) GetUser(c *gin.Context){
-	id := c.Param("id")
-    c.JSONP(http.StatusOK, gin.H{
-        "message": "ok",
-        "data": "User" + id,
-    })
+	// バリデーションは要検討
+	strId := c.Param("id")
+	if strId == "" {
+		c.AbortWithStatus(400)
+		log.Println("idを入力してください")
+	}
+	id, _ := strconv.Atoi(strId)
+	// ユーザー取得
+	user, err := model.FindUser(id)
+	if err != nil {
+		c.AbortWithStatus(400)
+		log.Println(err)
+	} else {
+		c.JSONP(http.StatusOK, gin.H{
+			"message": "ok",
+			"data": user,
+		})
+	}
 }
 
 func (pc UserController) CreateUser(c *gin.Context){
