@@ -15,7 +15,7 @@ ginとgormをdocker環境上で動かしてみるテスト用リポジトリで�
 > go run main.go  
 
 * API実行
-POSTMANあたりでPOSTしてください
+POSTMANあたりで実行してください
 
 * DBコンテナの操作  
 
@@ -24,8 +24,9 @@ POSTMANあたりでPOSTしてください
 > Enter password: root  
 > mysql> use backend;
 
-## その他
-* 環境変数
-{ENV_GO}.iniから読み込んでいる
-ENV_GOはdocker-compose内で指定
-src/app/config直下ini_sampleがあるのでそれを参考に作成する
+## その他  
+
+* 環境変数  
+{ENV_GO}.iniから読み込んでいる  
+ENV_GOはdocker-compose内で指定  
+src/app/config直下ini_sampleがあるのでそれを参考に作成する  
