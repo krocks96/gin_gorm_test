@@ -7,21 +7,25 @@ ginとgormをdocker環境上で動かしてみるテスト用リポジトリで�
 
 * コンテナを起動して入る  
 
-> docker-compose up -d  
-> docker-compose exec go bash  
+> docker-compose -f ./docker-compose-dev.yml up -d  
+> docker-compose -f ./docker-compose-dev.yml exec go bash  
 
 * go.mainの起動  
 
-> cd app  
 > go run main.go  
 
 * API実行
 POSTMANあたりでPOSTしてください
-GETは未実装
 
 * DBコンテナの操作  
 
-> docker-compose exec mysql bash  
+> docker-compose exec db bash  
 > mysql -u root -p  
 > Enter password: root  
 > mysql> use backend;
+
+## その他
+* 環境変数
+{ENV_GO}.iniから読み込んでいる
+ENV_GOはdocker-compose内で指定
+src/app/config直下ini_sampleがあるのでそれを参考に作成する

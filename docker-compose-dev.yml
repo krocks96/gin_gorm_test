@@ -8,15 +8,18 @@ services:
     platform: linux/x86_64
     environment:
       TZ: Asia/Tokyo
+      ENV_GO: dev
     ports:
-      - 3000:3000
+      - 3000:8080
+    # command:
+    #   - sh -c 'go run main.go'
     links:
-      - mysql
+      - db
     tty:
       true
     volumes:
-      - ./backend/src:/go/src
-  mysql:
+      - ./backend/src/app:/go/src/app
+  db:
     container_name: mysql
     build:
       context: ./mysql

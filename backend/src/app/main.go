@@ -1,15 +1,18 @@
 package main
 
 import (
-        "app/server"
-        "app/db"
-        )
+	"app/config"
+	"app/db"
+	"app/server"
+)
 
 func main() {
-    // DB起動
-    db.Init()
-    // サーバー起動
-    server.StartServer()
-    // DBクローズ
-    db.Close()
+	// config読込
+	config.Init()
+	// DB起動
+	db.Init()
+	// サーバー起動
+	server.StartServer()
+	// DBクローズ
+	db.Close()
 }
