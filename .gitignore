@@ -21,6 +21,8 @@
 go.work
 
 # Add
+.vscode/
 .DS_Store
 mysql/data
 mysql/sql
+backend/src/app/config/*.ini
